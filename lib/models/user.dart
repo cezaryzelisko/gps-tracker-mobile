@@ -16,8 +16,6 @@ class User {
   void fromMap(dynamic data) {
     accessToken = data['access'];
     refreshToken = data['refresh'];
-    print(data['accessExpiresAt']);
-    print(data['refreshExpiresAt']);
     accessExpirationDate = DateTime.fromMillisecondsSinceEpoch(data['accessExpiresAt'].toInt() * 1000);
     refreshExpirationDate = DateTime.fromMillisecondsSinceEpoch(data['refreshExpiresAt'].toInt() * 1000);
   }

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:gps_tracker_mobile/models/gps_footprint.dart';
+import 'package:gps_tracker_mobile/widgets/gps_list_item.dart';
+
 class ListWithFilters extends StatelessWidget {
-  final _items = [1, 2, 3, 4, 5];
+  final List<GPSFootprint> items;
+
+  ListWithFilters({this.items = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +18,8 @@ class ListWithFilters extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
-            itemBuilder: (context, index) => Text('item $index'),
-            itemCount: _items.length,
+            itemBuilder: (context, index) => GPSListItem(items[index]),
+            itemCount: items.length,
           ),
         ),
       ],
