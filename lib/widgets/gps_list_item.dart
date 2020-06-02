@@ -10,10 +10,12 @@ class GPSListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('(${gpsFootprint.lat}, ${gpsFootprint.lng})'),
+      title: Text('(${gpsFootprint.lat.toStringAsFixed(3)}, ${gpsFootprint.lng.toStringAsFixed(3)})'),
       subtitle: Text(gpsFootprint.publishedAt?.toLocal().toString()),
       leading: Icon(Icons.my_location),
-      onTap: () {},
+      onTap: () {
+        print(gpsFootprint);
+      },
     );
   }
 }

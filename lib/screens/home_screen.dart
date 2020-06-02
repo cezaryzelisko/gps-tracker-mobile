@@ -41,8 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            GPSMap(),
             Expanded(
+              flex: 2,
+              child: GPSMap(
+                initialCoords: gpsFootprints.length > 0 ? gpsFootprints[0] : null,
+                markersCoords: gpsFootprints,
+              ),
+            ),
+            Expanded(
+              flex: 3,
               child: ListWithFilters(items: gpsFootprints),
             ),
           ],
