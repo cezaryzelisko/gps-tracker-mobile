@@ -6,11 +6,11 @@ import 'dart:convert' as convert;
 import 'package:gps_tracker_mobile/models/user.dart';
 
 class UserProvider with ChangeNotifier {
-  User _user;
+  User user;
   var error = '';
 
   UserProvider() {
-    _user = User();
+    user = User.empty();
   }
 
   Future<void> login(String username, String password) async {
@@ -25,15 +25,11 @@ class UserProvider with ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      _user.fromMap(convert.jsonDecode(response.body));
+      user.fromMap(convert.jsonDecode(response.body));
       error = '';
     } else {
       error = 'Unable to log in';
     }
     notifyListeners();
-  }
-
-  bool isLoggedIn() {
-    return _user.accessToken != null;
   }
 }

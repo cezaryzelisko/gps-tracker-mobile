@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => UserProvider()),
       ],
       child: Consumer<UserProvider>(
-        builder: (context, user, child) => MaterialApp(
+        builder: (context, userProvider, child) => MaterialApp(
           title: 'GPS Tracker',
           theme: ThemeData(
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: user.isLoggedIn() ? HomeScreen() : LoginScreen(),
+          home: userProvider.user.isLoggedIn() ? HomeScreen() : LoginScreen(),
         ),
       ),
     );
