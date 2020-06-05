@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gps_tracker_mobile/screens/map_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:gps_tracker_mobile/providers/gps_footprint_provider.dart';
 import 'package:gps_tracker_mobile/providers/user_provider.dart';
-import 'package:gps_tracker_mobile/widgets/gps_map.dart';
+import 'package:gps_tracker_mobile/screens/map_screen.dart';
 import 'package:gps_tracker_mobile/widgets/list_with_filters.dart';
+import 'package:gps_tracker_mobile/widgets/gps_map.dart';
 import 'package:gps_tracker_mobile/utils/http_tools.dart';
 
 class HomeScreen extends StatefulWidget {
