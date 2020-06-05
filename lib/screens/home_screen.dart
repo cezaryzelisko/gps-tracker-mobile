@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_tracker_mobile/screens/map_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:gps_tracker_mobile/providers/gps_footprint_provider.dart';
@@ -43,10 +44,20 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Expanded(
               flex: 2,
-              child: GPSMap(
-                initialCoords: gpsFootprints.length > 0 ? gpsFootprints[0] : null,
-                markersCoords: gpsFootprints,
-              ),
+              child: Stack(children: [
+                GPSMap(
+                  initialCoords: gpsFootprints.length > 0 ? gpsFootprints[0] : null,
+                  markersCoords: gpsFootprints,
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: InkWell(
+                    child: Icon(Icons.fullscreen, size: 48),
+                    onTap: () => Navigator.of(context).pushNamed(MapScreen.ROUTE_NAME),
+                  ),
+                ),
+              ]),
             ),
             Expanded(
               flex: 3,

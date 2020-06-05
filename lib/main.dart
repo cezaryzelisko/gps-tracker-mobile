@@ -3,8 +3,9 @@ import 'package:provider/provider.dart';
 
 import 'package:gps_tracker_mobile/providers/gps_footprint_provider.dart';
 import 'package:gps_tracker_mobile/providers/user_provider.dart';
-import 'package:gps_tracker_mobile/screens/home_screen.dart';
 import 'package:gps_tracker_mobile/screens/login_screen.dart';
+import 'package:gps_tracker_mobile/screens/home_screen.dart';
+import 'package:gps_tracker_mobile/screens/map_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: userProvider.user.isLoggedIn() ? HomeScreen() : LoginScreen(),
+          routes: {
+            MapScreen.ROUTE_NAME: (ctx) => MapScreen(),
+          },
         ),
       ),
     );

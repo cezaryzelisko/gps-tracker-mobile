@@ -19,7 +19,7 @@ class GPSMap extends StatefulWidget {
 }
 
 class _GPSMapState extends State<GPSMap> {
-  static final mapState = GlobalKey<FlutterMapState>();
+  var _mapState = GlobalKey<FlutterMapState>();
   GPSBubble _bubble;
   int _markerIndex;
 
@@ -45,7 +45,7 @@ class _GPSMapState extends State<GPSMap> {
   }
 
   Widget getPositionedMarker(Marker marker) {
-    var map = mapState.currentState.mapState;
+    var map = _mapState.currentState.mapState;
     var pos = map.project(marker.point);
     pos = pos.multiplyBy(map.getZoomScale(map.zoom, map.zoom)) - map.getPixelOrigin();
 
@@ -75,14 +75,13 @@ class _GPSMapState extends State<GPSMap> {
 
     return Container(
       width: double.infinity,
-      color: Colors.lightGreen,
       child: Stack(
         children: [
           FlutterMap(
-            key: mapState,
+            key: _mapState,
             options: MapOptions(
               center: widget._initialCoords,
-              zoom: 13,
+              zoom: widget._initialCoords.latitude == 0 && widget._initialCoords.longitude == 0 ? 1 : 13,
               onTap: (point) {
                 setState(() {
                   _bubble = null;
@@ -97,19 +96,6 @@ class _GPSMapState extends State<GPSMap> {
               ),
               MarkerLayerOptions(markers: markers),
             ],
-          ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: InkWell(
-              child: Icon(
-                Icons.fullscreen,
-                size: 48,
-              ),
-              onTap: () {
-                print('fullscreen');
-              },
-            ),
           ),
           if (_bubble != null) getPositionedMarker(markers[_markerIndex])
         ],
