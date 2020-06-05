@@ -50,8 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   markersCoords: gpsFootprints,
                 ),
                 Positioned(
-                  top: 8,
-                  right: 8,
+                  top: 4,
+                  right: 4,
                   child: InkWell(
                     child: Icon(Icons.fullscreen, size: 48),
                     onTap: () => Navigator.of(context).pushNamed(MapScreen.ROUTE_NAME),

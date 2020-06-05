@@ -3,20 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:gps_tracker_mobile/widgets/modal.dart';
 import 'package:gps_tracker_mobile/widgets/radio_menu.dart';
 
-class Filters extends StatefulWidget {
+class FiltersMenu extends StatelessWidget {
   final void Function(DateTime firstDate, DateTime lastDate) dateHandler;
-
-  Filters(this.dateHandler);
-
-  @override
-  _FiltersState createState() => _FiltersState();
-}
-
-class _FiltersState extends State<Filters> {
   var _firstDateState = GlobalKey<RadioMenuState>();
   var _lastDateState = GlobalKey<RadioMenuState>();
   DateTime _firstDate;
   DateTime _lastDate;
+
+  FiltersMenu(this.dateHandler);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +43,7 @@ class _FiltersState extends State<Filters> {
             ),
           ),
         );
-        widget.dateHandler(_firstDate, _lastDate);
+        dateHandler(_firstDate, _lastDate);
       },
     );
   }

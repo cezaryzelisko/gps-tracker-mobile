@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:gps_tracker_mobile/models/gps_footprint.dart';
-import 'package:gps_tracker_mobile/widgets/filters.dart';
+import 'package:gps_tracker_mobile/widgets/filters_menu.dart';
 import 'package:gps_tracker_mobile/widgets/gps_list_item.dart';
+import 'package:gps_tracker_mobile/widgets/sort_menu.dart';
 
 class ListWithFilters extends StatefulWidget {
   final List<GPSFootprint> items;
@@ -51,8 +52,8 @@ class _ListWithFiltersState extends State<ListWithFilters> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Filters(setDateFrame),
-              Text('sort'),
+              FiltersMenu(setDateFrame),
+              SortMenu(),
             ],
           ),
         ),
