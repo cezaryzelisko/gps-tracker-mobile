@@ -8,8 +8,9 @@ import 'package:gps_tracker_mobile/widgets/sort_modal.dart';
 
 class ListWithFilters extends StatefulWidget {
   final List<GPSFootprint> items;
+  final String title;
 
-  ListWithFilters({this.items = const []});
+  ListWithFilters({this.items = const [], this.title = ''});
 
   @override
   _ListWithFiltersState createState() => _ListWithFiltersState();
@@ -70,6 +71,7 @@ class _ListWithFiltersState extends State<ListWithFilters> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FiltersModal(setDateFrame, _firstDate, _lastDate),
+              Text(widget.title),
               SortModal(setSortOption, _sortOption),
             ],
           ),

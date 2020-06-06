@@ -21,7 +21,10 @@ class FiltersModal extends StatelessWidget {
       radius: 24,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Icon(Icons.filter_list),
+        child: Icon(
+          Icons.filter_list,
+          semanticLabel: 'Filtering',
+        ),
       ),
       onTap: () async {
         await showModal(

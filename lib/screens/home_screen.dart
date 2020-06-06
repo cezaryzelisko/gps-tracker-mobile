@@ -61,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               flex: 3,
-              child: ListWithFilters(items: gpsFootprints),
+              child: ListWithFilters(
+                items: gpsFootprints,
+                title: 'GPS footprints',
+              ),
             ),
           ],
         ),
