@@ -68,7 +68,7 @@ class FiltersMenuState extends State<FiltersMenu> {
           },
         ),
         ListTile(
-          title: Text('custom date'),
+          title: Text('custom date:'),
           leading: Radio<FiltersOptions>(
             value: FiltersOptions.date,
             groupValue: _option,
@@ -79,6 +79,7 @@ class FiltersMenuState extends State<FiltersMenu> {
             },
           ),
           trailing: FlatButton(
+            color: Theme.of(context).accentColor,
             child: Text(formatDate(date)),
             onPressed: _dateEnabled
                 ? () async {

@@ -21,18 +21,11 @@ class MapScreen extends StatelessWidget {
           Positioned(
             top: 32,
             left: 8,
-            child: InkWell(
-              onTap: () => Navigator.of(context).pop(),
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Colors.grey,
-                ),
-                child: Icon(
-                  Icons.arrow_back,
-                  size: 32,
-                ),
+            child: IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: Icon(
+                Icons.arrow_back,
+                size: 32,
               ),
             ),
           ),

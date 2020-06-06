@@ -22,10 +22,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<UserProvider>(
         builder: (context, userProvider, child) => MaterialApp(
           title: 'GPS Tracker',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+          theme: _theme,
           home: userProvider.user.isLoggedIn() ? HomeScreen() : LoginScreen(),
           routes: {
             MapScreen.ROUTE_NAME: (ctx) => MapScreen(),
@@ -35,3 +32,16 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+var _theme = ThemeData(
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  primarySwatch: Colors.blue,
+  primaryColorBrightness: Brightness.dark,
+  brightness: Brightness.dark,
+  accentColor: Colors.lightBlue,
+  toggleableActiveColor: Colors.blue,
+  iconTheme: IconThemeData(color: Colors.lightBlueAccent),
+  buttonTheme: ButtonThemeData(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+  ),
+);

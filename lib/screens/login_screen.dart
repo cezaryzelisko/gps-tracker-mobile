@@ -69,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onSaved: (newValue) => _password = newValue,
                     obscureText: true,
                   ),
+                  SizedBox(height: 8),
                   RaisedButton(
                     child: Text('Log in'),
                     onPressed: () => loginHandler(userProvider),
