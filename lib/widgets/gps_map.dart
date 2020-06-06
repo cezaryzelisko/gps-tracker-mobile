@@ -19,7 +19,7 @@ class GPSMap extends StatefulWidget {
 }
 
 class _GPSMapState extends State<GPSMap> {
-  var _mapState = GlobalKey<FlutterMapState>();
+  final _mapState = GlobalKey<FlutterMapState>();
   GPSBubble _bubble;
   int _markerIndex;
 

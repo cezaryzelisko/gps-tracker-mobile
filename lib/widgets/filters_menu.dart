@@ -1,50 +1,107 @@
 import 'package:flutter/material.dart';
 
-import 'package:gps_tracker_mobile/widgets/modal.dart';
-import 'package:gps_tracker_mobile/widgets/radio_menu.dart';
+enum FiltersOptions {
+  fixed,
+  date,
+}
 
-class FiltersMenu extends StatelessWidget {
-  final void Function(DateTime firstDate, DateTime lastDate) dateHandler;
-  var _firstDateState = GlobalKey<RadioMenuState>();
-  var _lastDateState = GlobalKey<RadioMenuState>();
-  DateTime _firstDate;
-  DateTime _lastDate;
+class FiltersMenu extends StatefulWidget {
+  final String groupLabel;
+  final String fixedLabel;
+  final DateTime initialDate;
 
-  FiltersMenu(this.dateHandler);
+  const FiltersMenu(Key key, this.groupLabel, this.fixedLabel, this.initialDate) : super(key: key);
+
+  @override
+  FiltersMenuState createState() => FiltersMenuState();
+}
+
+class FiltersMenuState extends State<FiltersMenu> {
+  final firstDate = DateTime(2020, 1, 1);
+  final lastDate = DateTime.now().add(Duration(days: 366));
+  DateTime date;
+  FiltersOptions _option;
+  var _dateEnabled = false;
+
+  String formatDate(DateTime date) {
+    if (date == null) {
+      return 'choose date';
+    } else {
+      return date.toLocal().toString().split(' ')[0];
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialDate != null) {
+      _option = FiltersOptions.date;
+      date = widget.initialDate;
+      _dateEnabled = true;
+    } else {
+      _option = FiltersOptions.fixed;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      radius: 24,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Icon(Icons.filter_list),
-      ),
-      onTap: () async {
-        await showModal(
-          context,
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Filter date:'),
-                RadioMenu(_firstDateState, 'From', 'begining', DateTime.now()),
-                RadioMenu(_lastDateState, 'To', 'end', DateTime.now()),
-                RaisedButton(
-                  child: Text('Apply filters'),
-                  onPressed: () {
-                    _firstDate = _firstDateState.currentState.date;
-                    _lastDate = _lastDateState.currentState.date;
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(widget.groupLabel),
+        ListTile(
+          title: Text(widget.fixedLabel),
+          leading: Radio<FiltersOptions>(
+            value: FiltersOptions.fixed,
+            groupValue: _option,
+            onChanged: (value) {
+              setState(() {
+                _option = value;
+              });
+            },
           ),
-        );
-        dateHandler(_firstDate, _lastDate);
-      },
+          onTap: () {
+            setState(() {
+              _option = FiltersOptions.fixed;
+              _dateEnabled = false;
+            });
+          },
+        ),
+        ListTile(
+          title: Text('custom date'),
+          leading: Radio<FiltersOptions>(
+            value: FiltersOptions.date,
+            groupValue: _option,
+            onChanged: (value) {
+              setState(() {
+                _option = value;
+              });
+            },
+          ),
+          trailing: FlatButton(
+            child: Text(formatDate(date)),
+            onPressed: _dateEnabled
+                ? () async {
+                    var pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: widget.initialDate != null ? widget.initialDate : DateTime.now(),
+                      firstDate: firstDate,
+                      lastDate: lastDate,
+                    );
+                    setState(() {
+                      date = pickedDate;
+                    });
+                  }
+                : null,
+          ),
+          onTap: () {
+            setState(() {
+              _option = FiltersOptions.date;
+              _dateEnabled = true;
+            });
+          },
+        ),
+      ],
     );
   }
 }
