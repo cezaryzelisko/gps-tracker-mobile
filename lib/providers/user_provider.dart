@@ -1,8 +1,8 @@
-import 'package:flutter/widgets.dart';
-import 'package:gps_tracker_mobile/utils/http_tools.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 
+import 'package:gps_tracker_mobile/utils/http_tools.dart';
 import 'package:gps_tracker_mobile/models/user.dart';
 
 class UserProvider with ChangeNotifier {
@@ -18,18 +18,26 @@ class UserProvider with ChangeNotifier {
       'username': username,
       'password': password,
     };
-    var response = await http.post(
-      getUrl('auth', 'obtain_token'),
-      body: convert.jsonEncode(body),
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      user.fromMap(convert.jsonDecode(response.body));
-      error = '';
-    } else {
-      error = 'Unable to log in';
+    try {
+      var response = await http.post(
+        getUrl('auth', 'obtain_token'),
+        body: convert.jsonEncode(body),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        // OK
+        user.fromMap(convert.jsonDecode(response.body));
+        error = '';
+      } else if (response.statusCode == 401) {
+        // unauthorized
+        error = 'Invalid username or/and password.';
+      } else {
+        error = 'Unable to log in';
+      }
+    } catch (exception) {
+      error = 'Error occurred while connecting to the server.';
+    } finally {
+      notifyListeners();
     }
-    notifyListeners();
   }
 }

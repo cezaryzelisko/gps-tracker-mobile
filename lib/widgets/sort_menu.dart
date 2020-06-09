@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 enum SortOptions {
   newest,
   oldest,
+  device_id_az,
+  device_id_za,
 }
 
 class SortMenu extends StatefulWidget {
@@ -23,46 +25,36 @@ class SortMenuState extends State<SortMenu> {
     option = widget.defaultOption;
   }
 
+  ListTile getSortOptionWidget(String label, SortOptions sortOption) {
+    return ListTile(
+      title: Text(label),
+      leading: Radio<SortOptions>(
+        value: sortOption,
+        groupValue: option,
+        onChanged: (value) {
+          setState(() {
+            option = value;
+          });
+        },
+      ),
+      onTap: () {
+        setState(() {
+          option = sortOption;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(widget.label),
-        ListTile(
-          title: Text('from newest'),
-          leading: Radio<SortOptions>(
-            value: SortOptions.newest,
-            groupValue: option,
-            onChanged: (value) {
-              setState(() {
-                option = value;
-              });
-            },
-          ),
-          onTap: () {
-            setState(() {
-              option = SortOptions.newest;
-            });
-          },
-        ),
-        ListTile(
-          title: Text('from oldest'),
-          leading: Radio<SortOptions>(
-            value: SortOptions.oldest,
-            groupValue: option,
-            onChanged: (value) {
-              setState(() {
-                option = value;
-              });
-            },
-          ),
-          onTap: () {
-            setState(() {
-              option = SortOptions.oldest;
-            });
-          },
-        ),
+        getSortOptionWidget('from newest', SortOptions.newest),
+        getSortOptionWidget('from oldest', SortOptions.oldest),
+        getSortOptionWidget('device ID A->Z', SortOptions.device_id_az),
+        getSortOptionWidget('device ID Z->A', SortOptions.device_id_za),
       ],
     );
   }
