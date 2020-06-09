@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gps_tracker_mobile/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'package:gps_tracker_mobile/providers/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     decoration: InputDecoration(labelText: 'username'),
                     validator: (value) {
-                      if (value.length >= 3) {
+                      if (value.length >= 3 || value.length == 0) {
                         return null;
                       } else {
                         return 'Wrong username';
@@ -59,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     decoration: InputDecoration(labelText: 'password'),
                     validator: (value) {
-                      if (value.length >= 6) {
+                      if (value.length >= 6 || value.length == 0) {
                         return null;
                       } else {
                         return 'Wrong password';
