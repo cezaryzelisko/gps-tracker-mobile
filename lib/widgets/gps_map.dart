@@ -36,6 +36,7 @@ class _GPSMapState extends State<GPSMap> {
         onTap: () => bubbleHandler(
           index,
           GPSBubble(
+            footprint.deviceID,
             footprint.publishedAt,
             () => bubbleHandler(-1, null),
           ),
