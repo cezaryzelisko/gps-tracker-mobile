@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:gps_tracker_mobile/models/gps_footprint.dart';
 import 'package:gps_tracker_mobile/providers/gps_footprint_provider.dart';
 import 'package:gps_tracker_mobile/providers/user_provider.dart';
 import 'package:gps_tracker_mobile/screens/map_screen.dart';
@@ -31,44 +32,65 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var gpsFootprints = context.watch<GPSFootprintProvider>().gpsFootprints;
+    var gpsFootprintProvider = context.watch<GPSFootprintProvider>();
 
     return Scaffold(
       appBar: AppBar(
         title: Text('GPS Tracker'),
         centerTitle: true,
       ),
-      body: RefreshIndicator(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              flex: 2,
-              child: Stack(children: [
-                GPSMap(
-                  initialCoords: gpsFootprints.length > 0 ? gpsFootprints[0] : null,
-                  markersCoords: gpsFootprints,
-                ),
-                Positioned(
-                  top: 0,
-                  right: 12,
-                  child: IconButton(
-                    icon: Icon(Icons.fullscreen, size: 48),
-                    onPressed: () => Navigator.of(context).pushNamed(MapScreen.ROUTE_NAME),
+      body: FutureBuilder<List<GPSFootprint>>(
+        future: gpsFootprintProvider.getGpsFootprints(_apiClient),
+        initialData: [],
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            Widget body;
+            if (snapshot.data != null) {
+              body = Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Stack(children: [
+                      GPSMap(
+                        initialCoords: snapshot.data.length > 0 ? snapshot.data[0] : null,
+                        markersCoords: snapshot.data,
+                      ),
+                      Positioned(
+                        top: 0,
+                        right: 12,
+                        child: IconButton(
+                          icon: Icon(Icons.fullscreen, size: 48),
+                          onPressed: () => Navigator.of(context).pushNamed(MapScreen.ROUTE_NAME),
+                        ),
+                      ),
+                    ]),
                   ),
-                ),
-              ]),
-            ),
-            Expanded(
-              flex: 3,
-              child: ListWithFilters(
-                items: gpsFootprints,
-                title: 'GPS footprints',
-              ),
-            ),
-          ],
-        ),
-        onRefresh: refreshHandler,
+                  Expanded(
+                    flex: 3,
+                    child: ListWithFilters(
+                      items: snapshot.data,
+                      title: 'GPS footprints',
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              body = Center(
+                child: Text('An error occurred while downloading data. Please try to refresh'),
+              );
+            }
+
+            return RefreshIndicator(
+              child: body,
+              onRefresh: refreshHandler,
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
