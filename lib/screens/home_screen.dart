@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
       ),
       body: FutureBuilder<List<GPSFootprint>>(
-        future: gpsFootprintProvider.getGpsFootprints(_apiClient),
+        future: gpsFootprintProvider.getGPSFootprints(_apiClient),
         initialData: [],
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {

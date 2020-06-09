@@ -14,13 +14,14 @@ class GPSFootprintProvider with ChangeNotifier {
   Future<void> downloadGPSFootprints(ApiClient apiClient, {notify = true}) async {
     var response = await apiClient.get(getUrl('api', 'gps_footprint'));
     var data = convert.jsonDecode(response.body);
+    gpsFootprints.clear();
     gpsFootprints.addAll(data.map<GPSFootprint>((gpsFootprint) => GPSFootprint.fromMap(gpsFootprint)).toList());
     if (notify) {
       notifyListeners();
     }
   }
 
-  Future<List<GPSFootprint>> getGpsFootprints(ApiClient apiClient) async {
+  Future<List<GPSFootprint>> getGPSFootprints(ApiClient apiClient) async {
     if (gpsFootprints.length == 0) {
       await downloadGPSFootprints(apiClient);
     }
