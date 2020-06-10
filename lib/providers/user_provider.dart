@@ -30,7 +30,7 @@ class UserProvider with ChangeNotifier {
         error = '';
       } else if (response.statusCode == 401) {
         // unauthorized
-        error = 'Invalid username or/and password.';
+        error = 'Invalid username and/or password.';
       } else {
         error = 'Unable to log in';
       }
@@ -39,5 +39,10 @@ class UserProvider with ChangeNotifier {
     } finally {
       notifyListeners();
     }
+  }
+
+  void logout() {
+    user = User.empty();
+    notifyListeners();
   }
 }

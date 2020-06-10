@@ -12,6 +12,11 @@ import 'package:gps_tracker_mobile/screens/map_screen.dart';
 import 'package:gps_tracker_mobile/widgets/gps_map.dart';
 import 'package:gps_tracker_mobile/utils/http_tools.dart';
 
+enum HomeMenuItems {
+  refresh,
+  logout,
+}
+
 class HomeScreen extends StatefulWidget {
   static const ROUTE_NAME = '/home';
 
@@ -36,6 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> refreshHandler() async {
     context.read<GPSFootprintProvider>().downloadGPSFootprints(_apiClient);
+  }
+
+  void menuItemHandler(HomeMenuItems item) {
+    switch (item) {
+      case HomeMenuItems.refresh:
+        refreshHandler();
+        break;
+      case HomeMenuItems.logout:
+        context.read<UserProvider>().logout();
+        break;
+    }
   }
 
   void filtersHandler(DateTime firstDate, DateTime lastDate, List<int> selectedIDs) {
@@ -67,6 +83,21 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('GPS Tracker'),
         centerTitle: true,
+        actions: [
+          PopupMenuButton<HomeMenuItems>(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: HomeMenuItems.refresh,
+                child: Text('Refresh'),
+              ),
+              PopupMenuItem(
+                value: HomeMenuItems.logout,
+                child: Text('Logout'),
+              ),
+            ],
+            onSelected: menuItemHandler,
+          ),
+        ],
       ),
       body: FutureBuilder<List<GPSFootprint>>(
         future: gpsFootprintProvider.getGPSFootprints(_apiClient),
