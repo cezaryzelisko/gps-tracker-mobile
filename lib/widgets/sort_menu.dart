@@ -49,6 +49,7 @@ class SortMenuState extends State<SortMenu> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(widget.label),
         getSortOptionWidget('from newest', SortOptions.newest),

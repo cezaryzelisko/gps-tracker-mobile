@@ -7,8 +7,8 @@ import 'package:gps_tracker_mobile/utils/http_tools.dart';
 class GPSFootprintProvider with ChangeNotifier {
   List<GPSFootprint> gpsFootprints;
 
-  GPSFootprintProvider() {
-    gpsFootprints = [];
+  GPSFootprintProvider([List<GPSFootprint> data]) {
+    gpsFootprints = data != null ? data : [];
   }
 
   Future<void> downloadGPSFootprints(ApiClient apiClient, {notify = true}) async {
