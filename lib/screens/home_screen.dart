@@ -106,7 +106,12 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.connectionState == ConnectionState.done) {
             Widget body;
             if (snapshot.data != null) {
-              gpsFootprints = filterGPSFootprints(snapshot.data, _firstDate, _lastDate, _selectedIDs);
+              gpsFootprints = filterGPSFootprints(
+                snapshot.data,
+                firstDate: _firstDate,
+                lastDate: _lastDate,
+                selectedIDs: _selectedIDs,
+              );
               gpsFootprints = sortGPSFootprints(gpsFootprints, _sortOption);
               body = Column(
                 mainAxisSize: MainAxisSize.min,

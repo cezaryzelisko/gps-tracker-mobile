@@ -15,11 +15,11 @@ var sorter = {
 List<GPSFootprint> sortGPSFootprints(List<GPSFootprint> items, SortOptions option) => items..sort(sorter[option]);
 
 List<GPSFootprint> filterGPSFootprints(
-  List<GPSFootprint> items,
+  List<GPSFootprint> items, {
   DateTime firstDate,
   DateTime lastDate,
   List<int> selectedIDs,
-) {
+}) {
   return items.where((gpsFootprint) {
     if (firstDate != null && gpsFootprint.publishedAt.isBefore(firstDate)) {
       return false;

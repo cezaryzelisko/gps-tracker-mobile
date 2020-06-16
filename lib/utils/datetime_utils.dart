@@ -3,7 +3,7 @@ String formatDateTime(DateTime dateTime, {withDate = true, withTime = true, with
   if (withDate && withTime && withMillis) {
     return localDateTimeStr;
   }
-  
+
   var parts = localDateTimeStr.split(' ');
   var date = parts[0];
   var timeParts = parts[1].split('.');
@@ -15,8 +15,12 @@ String formatDateTime(DateTime dateTime, {withDate = true, withTime = true, with
     formattedDateTime += date;
   }
 
-  if (withTime && formattedDateTime.length > 0) {
-    formattedDateTime += ' $time';
+  if (withTime) {
+    if (formattedDateTime.length > 0) {
+      formattedDateTime += ' $time';
+    } else {
+      formattedDateTime += time;
+    }
   }
 
   if (withMillis) {
