@@ -80,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var gpsFootprintProvider = context.watch<GPSFootprintProvider>();
 
     return Scaffold(
+      key: Key('home_screen'),
       appBar: AppBar(
         title: Text('GPS Tracker'),
         centerTitle: true,

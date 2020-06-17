@@ -8,10 +8,10 @@ import 'package:gps_tracker_mobile/screens/home_screen.dart';
 import 'package:gps_tracker_mobile/screens/map_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(GPSTracker());
 }
 
-class MyApp extends StatelessWidget {
+class GPSTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

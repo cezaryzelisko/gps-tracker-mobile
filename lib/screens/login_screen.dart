@@ -56,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   TextFormField(
+                    key: Key('username'),
                     decoration: InputDecoration(labelText: 'username'),
                     validator: (value) {
                       if (value.length >= 3 || value.length == 0) {
@@ -72,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onFieldSubmitted: (value) => _passwordFocus.requestFocus(),
                   ),
                   TextFormField(
+                    key: Key('password'),
                     focusNode: _passwordFocus,
                     decoration: InputDecoration(labelText: 'password'),
                     validator: (value) {
@@ -88,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 8),
                   RaisedButton(
+                    key: Key('login'),
                     child: Text('Log in'),
                     onPressed: _loginEnabled ? () => loginHandler(userProvider) : null,
                   ),
