@@ -11,7 +11,6 @@ void main() {
     );
 
     await tester.pumpWidget(widgetsTree);
-    final idFinder = find.text('ID: 1');
-    expect(idFinder, findsOneWidget);
+    expect(find.text('ID: 1'), findsOneWidget);
   });
 }
